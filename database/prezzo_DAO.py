@@ -39,3 +39,26 @@ class PrezzoDAO:
             cnx.close()
 
         return result
+
+    def prezzi_per_mese(self,mese:int):
+        cnx=DBConnect.get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        query= "SELECT * FROM prezzo WHERE MONTH(data)=%s"
+        result=[]
+        try:
+            cursor.execute(query,(mese,))
+            for row in cursor:
+                prezzo = Prezzo(
+                    data=row["data"],
+                    prezzo_litro=float(row["prezzo_litro"]),
+                    id_distributore=row["id_distributore"],
+                )
+                result.append(prezzo)
+
+        except Exception as e:
+            print(f"Errore durante la query prezzi_per_mese: {e}")
+            return None
+        finally:
+            cursor.close()
+            cnx.close()
+        return result

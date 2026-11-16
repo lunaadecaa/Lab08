@@ -20,3 +20,5 @@ class Prezzo:
 
     def __repr__(self):
         return f"{self.data} | Prezzo: {self.prezzo_litro} €/litro | Distributore: {self.id_distributore}"
+
+
